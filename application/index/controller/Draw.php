@@ -11,8 +11,8 @@ class Draw extends Common
     {
     	// dump();
         // return '1';
-    	$id = $request->get('id');
-    	$data = Db::table('draw')->where('id',$id)->find();
+    	$id = $request->get('id') ?? '';
+    	$data = Db::table('draw')->where('id',$id)->order('id desc')->find();
 
         return $this->fetch('index',['data'=>$data]);
         //加载抽奖页面
