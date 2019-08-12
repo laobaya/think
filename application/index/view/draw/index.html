@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <title>移动端扭蛋抽奖</title>
+    {css href="__ROOT__/static/index/draw/css/index.css" /}
+    <script>
+      ! function(a, b) {
+          function c() {
+              var b = f.getBoundingClientRect().width;
+              b / i > 750 && (b = 750 * i);
+              var c = b / 7.5;
+              f.style.fontSize = c + "px", k.rem = a.rem = c
+          }
+          var d, e = a.document,
+              f = e.documentElement,
+              g = e.querySelector('meta[name="viewport"]'),
+              h = e.querySelector('meta[name="flexible"]'),
+              i = 0,
+              j = 0,
+              k = b.flexible || (b.flexible = {});
+          if (g) {
+              var l = g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);
+              l && (j = parseFloat(l[1]), i = parseInt(1 / j))
+          } else if (h) {
+              var m = h.getAttribute("content");
+              if (m) {
+                  var n = m.match(/initial\-dpr=([\d\.]+)/),
+                      o = m.match(/maximum\-dpr=([\d\.]+)/);
+                  n && (i = parseFloat(n[1]), j = parseFloat((1 / i).toFixed(2))), o && (i = parseFloat(o[1]), j = parseFloat((1 / i).toFixed(2)))
+              }
+          }
+          if (!i && !j) {
+              var p = (a.navigator.appVersion.match(/android/gi), a.navigator.appVersion.match(/iphone/gi)),
+                  q = a.devicePixelRatio;
+              i = p ? q >= 3 && (!i || i >= 3) ? 3 : q >= 2 && (!i || i >= 2) ? 2 : 1 : 1, j = 1 / i
+          }
+          if (f.setAttribute("data-dpr", i), !g)
+              if (g = e.createElement("meta"), g.setAttribute("name", "viewport"), g.setAttribute("content", "initial-scale=" + j + ", maximum-scale=" + j + ", minimum-scale=" + j + ", user-scalable=no"), f.firstElementChild) f.firstElementChild.appendChild(g);
+              else {
+                  var r = e.createElement("div");
+                  r.appendChild(g), e.write(r.innerHTML)
+              } a.addEventListener("resize", function() { clearTimeout(d), d = setTimeout(c, 300) }, !1), a.addEventListener("pageshow", function(a) { a.persisted && (clearTimeout(d), d = setTimeout(c, 300)) }, !1), "complete" === e.readyState ? e.body.style.fontSize = 12 * i + "px" : e.addEventListener("DOMContentLoaded", function() { e.body.style.fontSize = 12 * i + "px" }, !1), c(), k.dpr = a.dpr = i, k.refreshRem = c, k.rem2px = function(a) { var b = parseFloat(a) * this.rem; return "string" == typeof a && a.match(/rem$/) && (b += "px"), b }, k.px2rem = function(a) { var b = parseFloat(a) / this.rem; return "string" == typeof a && a.match(/px$/) && (b += "rem"), b }
+      }(window, window.lib || (window.lib = {}));
+    </script>
+</head>
+
+<body>
+    <div class="niu_danji">
+        <div class="game_qu">
+            <div class="game_go"><!-- 10/次 --></div>
+            <div class="wdjifen"></div>
+        </div>
+        <div class="dan_gund">
+            <span class="qiu_1 diaol_1"></span>
+            <span class="qiu_2 diaol_2"> </span>
+            <span class="qiu_3 diaol_3"></span>
+            <span class="qiu_4 diaol_4"></span>
+            <span class="qiu_5 diaol_5"></span>
+            <span class="qiu_6 diaol_6"></span>
+            <span class="qiu_7 diaol_7"></span>
+            <span class="qiu_8 diaol_8"></span>
+            <span class="qiu_9 diaol_9"></span>
+            <span class="qiu_10 diaol_10"></span>
+            <span class="qiu_11 diaol_11"></span>
+        </div>
+        <div class="medon"><img src="__ROOT__/static/index/draw/images/mendong.png"></div>
+        <div class="zjdl">
+            <span></span>
+        </div>
+    </div>
+    <div class="zonj_zezc none" id="jianpin_one">
+        <div class="jpzs aiqiyi tc_anima">
+            <em class="close"></em>
+            <h2>
+                <b>恭喜你！<br>获得一等奖！</b>
+            </h2>
+        </div>
+    </div>
+    <div class="zonj_zezc none" id="jianpin_two">
+        <div class="jpzs aiqiyi tc_anima">
+            <em class="close"></em>
+            <h2>
+                <b>恭喜你！<br>获得二等奖！</b>
+            </h2>
+        </div>
+    </div>
+    <div class="zonj_zezc none" id="jianpin_three">
+        <div class="jpzs aiqiyi tc_anima">
+            <em class="close"></em>
+            <h2>
+                <b>恭喜你！<br>获得三等奖！</b>
+            </h2>
+        </div>
+    </div>
+    <div class="zonj_zezc none" id="jianpin_kong">
+        <div class="jpzs aiqiyi tc_anima">
+            <em class="close"></em>
+            <h2>
+                咦？没有抽中？
+            </h2>
+        </div>
+    </div>
+    <div class="zonj_zezc none" id="no_jifeng">
+        <div class="jpzs aiqiyi tc_anima">
+            <em  class="close"></em>
+            <h2>
+                对不起，你已经抽过了！
+            </h2>
+        </div>
+    </div>
+    {js href="__ROOT__/static/index/draw/js/jquery.min.js" /}
+    <script>
+    $(function() {
+        var score = 1000;
+        var flag = true; // 节流阀 控制不能连续点击
+        //$(".wdjifen").html(score);
+        $(".game_go").click(function() {
+            if (flag) {
+                var url = "{:url('draw/is_enjoy')}";
+                var data = {'id':{$id}};
+
+                //判断是否抽过奖
+                $.post(url,data,function(res){
+                  // console.log(res);
+                  flag = false;
+                  score -= 1000;
+                  // console.log(score);
+                  if (score < 0 || res.res == 0) {
+                      for (i = 1; i <= 11; i++) {
+                          $(".qiu_" + i).removeClass("wieyi_" + i);
+                      }
+                      $("#no_jifeng").show();
+                  } else {
+                      draw();
+                  }
+
+                });
+            }
+        });
+
+        function draw() {
+            var number = Math.floor(4 * Math.random() + 1); // 随机中奖号码 number标识
+            for (i = 1; i <= 11; i++) {
+                // $(".qiu_" + i).removeClass("diaol_" + i);
+                $(".qiu_" + i).addClass("wieyi_" + i);
+            }
+
+            setTimeout(function() {
+                for (i = 1; i <= 11; i++) {
+                    $(".qiu_" + i).removeClass("wieyi_" + i);
+                }
+            }, 1100);
+            setTimeout(function() {
+                switch (number) {
+                    case 1:
+                        $(".zjdl").children("span").addClass("diaL_one");
+                        break;
+                    case 2:
+                        $(".zjdl").children("span").addClass("diaL_two");
+                        break;
+                    case 3:
+                        $(".zjdl").children("span").addClass("diaL_three");
+                        break;
+                    case 4:
+                        $(".zjdl").children("span").addClass("diaL_four");
+                        break;
+                }
+                $(".zjdl").removeClass("none").addClass("dila_Y");
+                setTimeout(function() {
+                    switch (number) {
+                        case 1:
+                            $("#jianpin_one").show();
+                            break;
+                        case 2:
+                            $("#jianpin_two").show();
+                            break;
+                        case 3:
+                            $("#jianpin_three").show();
+                            break;
+                        case 4:
+                            $("#jianpin_kong").show();
+                            break;
+                    }
+                }, 900);
+            }, 3000)
+
+            //取消动画
+            setTimeout(function() {
+                $(".zjdl").addClass("none").removeClass("dila_Y");
+                // $(".wdjifen").html(score);
+                $(".zjdl").children("span").removeAttr('class');
+                flag = true;
+            }, 3500)
+        }
+
+        $('.close').click(function() {
+            $('.zonj_zezc').fadeOut();
+        });
+    })
+    </script>
+</body>
+
+</html>
